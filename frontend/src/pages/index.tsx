@@ -57,6 +57,7 @@ export default function IndexPage() {
           {/* Edit Modal */}
           <Modal
             isOpen={editDisclosure.isOpen}
+            // placement="center"
             onOpenChange={editDisclosure.onOpenChange}
           >
             <ModalContent>
