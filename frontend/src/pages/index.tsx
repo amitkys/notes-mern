@@ -65,25 +65,56 @@ export default function IndexPage() {
 
           {/* Edit Modal */}
           <Modal
+            className="dark text-foreground bg-background shadow-lg shadow-gray-700/40 "
             isOpen={editDisclosure.isOpen}
-            // placement="center"
             onOpenChange={editDisclosure.onOpenChange}
+            // placement="center"
           >
             <ModalContent>
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                    Edit Notes
+                    Update notes
                   </ModalHeader>
                   <ModalBody>
-                    <p>hellow</p>
+                    <Form
+                      action=""
+                      id="create-notes-form"
+                      validationBehavior="native"
+                      // onSubmit={(e) => {
+                      //   e.preventDefault();
+                      //   // Handle form submission logic here
+                      //   onClose(); // Close the modal after submission
+                      // }}
+                    >
+                      <Input
+                        isRequired
+                        errorMessage="Title is required"
+                        label="Title"
+                        labelPlacement="outside"
+                        variant="bordered"
+                      />
+                      <Textarea
+                        isClearable
+                        isRequired
+                        errorMessage="write any description"
+                        label="Description"
+                        variant="underlined"
+                        // eslint-disable-next-line no-console
+                        onClear={() => console.log("textarea cleared")}
+                      />
+                    </Form>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="danger" variant="light" onPress={onClose}>
-                      Close
+                      Cancel
                     </Button>
-                    <Button color="primary" onPress={onClose}>
-                      Save
+                    <Button
+                      color="primary"
+                      form="create-notes-form"
+                      type="submit"
+                    >
+                      Confirm
                     </Button>
                   </ModalFooter>
                 </>
@@ -93,6 +124,7 @@ export default function IndexPage() {
 
           {/* Delete Modal */}
           <Modal
+            className="dark text-foreground bg-background shadow-lg shadow-gray-700/40 "
             isOpen={deleteDisclosure.isOpen}
             onOpenChange={deleteDisclosure.onOpenChange}
           >
