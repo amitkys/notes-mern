@@ -10,6 +10,7 @@ import {
 import { MdDelete } from "react-icons/md";
 import { Divider } from "@nextui-org/divider";
 import { RiEdit2Line } from "react-icons/ri";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { Button } from "@nextui-org/button";
 
 import DefaultLayout from "@/layouts/default";
@@ -21,8 +22,9 @@ export default function IndexPage() {
 
   return (
     <DefaultLayout>
+      <IoIosAddCircleOutline className="text-4xl lg:text-6xl" />
       <div className="min-h-screen">
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3">
           <Card className="shadow-lg border border-gray-600">
             <CardHeader>
               <h1>This is heading</h1>
