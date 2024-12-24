@@ -12,7 +12,8 @@ import { Divider } from "@nextui-org/divider";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
+import { Input, Textarea } from "@nextui-org/input";
+import { Form } from "@nextui-org/form";
 
 import DefaultLayout from "@/layouts/default";
 
@@ -25,7 +26,7 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       <button
-        className="fixed bottom-6 right-6 z-50"
+        className="fixed bottom-6 right-6 z-50 border-none"
         onClick={postDisclosure.onOpen}
       >
         <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
@@ -119,6 +120,7 @@ export default function IndexPage() {
 
           {/* create post modal  */}
           <Modal
+            backdrop="blur"
             className="dark text-foreground bg-background shadow-lg shadow-gray-700/40 "
             isOpen={postDisclosure.isOpen}
             onOpenChange={postDisclosure.onOpenChange}
@@ -130,17 +132,43 @@ export default function IndexPage() {
                     Create Notes
                   </ModalHeader>
                   <ModalBody>
-                    <Input
-                      label="Title"
-                      labelPlacement="outside"
-                      variant="bordered"
-                    />
+                    <Form
+                      action=""
+                      id="create-notes-form"
+                      validationBehavior="native"
+                      // onSubmit={(e) => {
+                      //   e.preventDefault();
+                      //   // Handle form submission logic here
+                      //   onClose(); // Close the modal after submission
+                      // }}
+                    >
+                      <Input
+                        isRequired
+                        errorMessage="Title is required"
+                        label="Title"
+                        labelPlacement="outside"
+                        variant="bordered"
+                      />
+                      <Textarea
+                        isClearable
+                        isRequired
+                        errorMessage="write any description"
+                        label="Description"
+                        variant="underlined"
+                        // eslint-disable-next-line no-console
+                        onClear={() => console.log("textarea cleared")}
+                      />
+                    </Form>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="danger" variant="light" onPress={onClose}>
                       Cancel
                     </Button>
-                    <Button color="primary" onPress={onClose}>
+                    <Button
+                      color="primary"
+                      form="create-notes-form"
+                      type="submit"
+                    >
                       Confirm
                     </Button>
                   </ModalFooter>
