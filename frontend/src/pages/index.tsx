@@ -19,10 +19,14 @@ export default function IndexPage() {
   // Separate disclosures for each modal
   const editDisclosure = useDisclosure();
   const deleteDisclosure = useDisclosure();
+  const postDisclosure = useDisclosure();
 
   return (
     <DefaultLayout>
-      <button className="fixed bottom-6 right-6 z-50">
+      <button
+        className="fixed bottom-6 right-6 z-50"
+        onClick={postDisclosure.onOpen}
+      >
         <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
       </button>
 
@@ -95,6 +99,33 @@ export default function IndexPage() {
                 <>
                   <ModalHeader className="flex flex-col gap-1">
                     Delete Modal
+                  </ModalHeader>
+                  <ModalBody>
+                    <p>Are you sure you want to delete this?</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Cancel
+                    </Button>
+                    <Button color="primary" onPress={onClose}>
+                      Confirm
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+
+          {/* create post modal  */}
+          <Modal
+            isOpen={postDisclosure.isOpen}
+            onOpenChange={postDisclosure.onOpenChange}
+          >
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    Create Notes
                   </ModalHeader>
                   <ModalBody>
                     <p>Are you sure you want to delete this?</p>
