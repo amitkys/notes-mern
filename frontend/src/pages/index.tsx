@@ -1,14 +1,21 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {  Modal,  ModalContent,  ModalHeader,  ModalBody,  ModalFooter, useDisclosure} from "@nextui-org/modal";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/modal";
 import { MdDelete } from "react-icons/md";
 import { Divider } from "@nextui-org/divider";
 import { RiEdit2Line } from "react-icons/ri";
-
-import DefaultLayout from "@/layouts/default";
 import { Button } from "@nextui-org/button";
 
+import DefaultLayout from "@/layouts/default";
+
 export default function IndexPage() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <DefaultLayout>
@@ -25,7 +32,10 @@ export default function IndexPage() {
           <Divider />
 
           <CardFooter className="flex justify-end gap-2">
-            <button className="bg-black rounded-full p-1 cursor-pointer">
+            <button
+              className="bg-black rounded-full p-1 cursor-pointer"
+              onClick={onOpen}
+            >
               <RiEdit2Line className="text-primary-500 text-xl" />
             </button>
             <button className="bg-black rounded-full p-1 cursor-pointer">
@@ -33,6 +43,32 @@ export default function IndexPage() {
             </button>
           </CardFooter>
         </Card>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Modal Title
+                </ModalHeader>
+                <ModalBody>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nullam pulvinar risus non risus hendrerit venenatis.
+                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                  </p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color="primary" onPress={onClose}>
+                    Action
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </div>
     </DefaultLayout>
   );
