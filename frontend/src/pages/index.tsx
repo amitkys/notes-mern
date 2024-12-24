@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import {
   Modal,
@@ -6,6 +6,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  useDisclosure,
 } from "@nextui-org/modal";
 import { MdDelete } from "react-icons/md";
 import { Divider } from "@nextui-org/divider";
@@ -15,22 +16,16 @@ import { Button } from "@nextui-org/button";
 import DefaultLayout from "@/layouts/default";
 
 export default function IndexPage() {
-  const [openModal, setOpenModal] = useState(null); // Track which modal is open
-
-  const handleOpenModal = (modalId) => {
-    setOpenModal(modalId); // Open the specific modal
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(null); // Close any open modal
-  };
+  // Separate disclosures for each modal
+  const editDisclosure = useDisclosure();
+  const deleteDisclosure = useDisclosure();
 
   return (
     <DefaultLayout>
       <div className="grid grid-cols-3">
         <Card className="shadow-lg border border-gray-600">
           <CardHeader>
-            <h1>this is heading</h1>
+            <h1>This is heading</h1>
           </CardHeader>
           <Divider />
 
@@ -42,13 +37,13 @@ export default function IndexPage() {
           <CardFooter className="flex justify-end gap-2">
             <button
               className="bg-black rounded-full p-1 cursor-pointer"
-              onClick={() => handleOpenModal("edit")}
+              onClick={editDisclosure.onOpen}
             >
               <RiEdit2Line className="text-primary-500 text-xl" />
             </button>
             <button
               className="bg-black rounded-full p-1 cursor-pointer"
-              onClick={() => handleOpenModal("delete")}
+              onClick={deleteDisclosure.onOpen}
             >
               <MdDelete className="text-red-500 text-xl" />
             </button>
@@ -56,7 +51,10 @@ export default function IndexPage() {
         </Card>
 
         {/* Edit Modal */}
-        <Modal isOpen={openModal === "edit"} onOpenChange={handleCloseModal}>
+        <Modal
+          isOpen={editDisclosure.isOpen}
+          onOpenChange={editDisclosure.onOpenChange}
+        >
           <ModalContent>
             {(onClose) => (
               <>
@@ -80,7 +78,10 @@ export default function IndexPage() {
         </Modal>
 
         {/* Delete Modal */}
-        <Modal isOpen={openModal === "delete"} onOpenChange={handleCloseModal}>
+        <Modal
+          isOpen={deleteDisclosure.isOpen}
+          onOpenChange={deleteDisclosure.onOpenChange}
+        >
           <ModalContent>
             {(onClose) => (
               <>
