@@ -22,9 +22,10 @@ export default function IndexPage() {
 
   return (
     <DefaultLayout>
-      <button>
+      <button className="fixed bottom-6 right-6 z-50">
         <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
       </button>
+
       <div className="min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <Card className="shadow-lg border border-gray-600">
