@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import {
   Modal,
@@ -5,7 +6,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  useDisclosure,
 } from "@nextui-org/modal";
 import { MdDelete } from "react-icons/md";
 import { Divider } from "@nextui-org/divider";
@@ -15,7 +15,15 @@ import { Button } from "@nextui-org/button";
 import DefaultLayout from "@/layouts/default";
 
 export default function IndexPage() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [openModal, setOpenModal] = useState(null); // Track which modal is open
+
+  const handleOpenModal = (modalId) => {
+    setOpenModal(modalId); // Open the specific modal
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(null); // Close any open modal
+  };
 
   return (
     <DefaultLayout>
@@ -34,35 +42,60 @@ export default function IndexPage() {
           <CardFooter className="flex justify-end gap-2">
             <button
               className="bg-black rounded-full p-1 cursor-pointer"
-              onClick={onOpen}
+              onClick={() => handleOpenModal("edit")}
             >
               <RiEdit2Line className="text-primary-500 text-xl" />
             </button>
-            <button className="bg-black rounded-full p-1 cursor-pointer">
+            <button
+              className="bg-black rounded-full p-1 cursor-pointer"
+              onClick={() => handleOpenModal("delete")}
+            >
               <MdDelete className="text-red-500 text-xl" />
             </button>
           </CardFooter>
         </Card>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+
+        {/* Edit Modal */}
+        <Modal isOpen={openModal === "edit"} onOpenChange={handleCloseModal}>
           <ModalContent>
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  Modal Title
+                  Edit Modal
                 </ModalHeader>
                 <ModalBody>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam pulvinar risus non risus hendrerit venenatis.
-                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                  </p>
+                  <p>Edit your content here.</p>
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="light" onPress={onClose}>
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
-                    Action
+                    Save
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+
+        {/* Delete Modal */}
+        <Modal isOpen={openModal === "delete"} onOpenChange={handleCloseModal}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Delete Modal
+                </ModalHeader>
+                <ModalBody>
+                  <p>Are you sure you want to delete this?</p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Cancel
+                  </Button>
+                  <Button color="primary" onPress={onClose}>
+                    Confirm
                   </Button>
                 </ModalFooter>
               </>
