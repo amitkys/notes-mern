@@ -65,6 +65,7 @@ export default function IndexPage() {
 
           {/* Edit Modal */}
           <Modal
+            backdrop="blur"
             className="dark text-foreground bg-background shadow-lg shadow-gray-700/40 "
             isOpen={editDisclosure.isOpen}
             onOpenChange={editDisclosure.onOpenChange}
@@ -124,6 +125,7 @@ export default function IndexPage() {
 
           {/* Delete Modal */}
           <Modal
+            backdrop="blur"
             className="dark text-foreground bg-background shadow-lg shadow-gray-700/40 "
             isOpen={deleteDisclosure.isOpen}
             onOpenChange={deleteDisclosure.onOpenChange}
