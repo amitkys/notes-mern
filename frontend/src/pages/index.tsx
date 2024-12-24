@@ -12,6 +12,7 @@ import { Divider } from "@nextui-org/divider";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
 
 import DefaultLayout from "@/layouts/default";
 
@@ -118,6 +119,7 @@ export default function IndexPage() {
 
           {/* create post modal  */}
           <Modal
+            className="dark text-foreground bg-background shadow-lg shadow-gray-700/40 "
             isOpen={postDisclosure.isOpen}
             onOpenChange={postDisclosure.onOpenChange}
           >
@@ -128,7 +130,11 @@ export default function IndexPage() {
                     Create Notes
                   </ModalHeader>
                   <ModalBody>
-                    <p>Are you sure you want to delete this?</p>
+                    <Input
+                      label="Title"
+                      labelPlacement="outside"
+                      variant="bordered"
+                    />
                   </ModalBody>
                   <ModalFooter>
                     <Button color="danger" variant="light" onPress={onClose}>
