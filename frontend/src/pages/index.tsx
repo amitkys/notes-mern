@@ -22,7 +22,9 @@ export default function IndexPage() {
 
   return (
     <DefaultLayout>
-      <IoIosAddCircleOutline className="text-4xl lg:text-6xl" />
+      <button>
+        <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
+      </button>
       <div className="min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <Card className="shadow-lg border border-gray-600">
@@ -64,10 +66,10 @@ export default function IndexPage() {
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                    Edit Modal
+                    Edit Notes
                   </ModalHeader>
                   <ModalBody>
-                    <p>Edit your content here.</p>
+                    <p>hellow</p>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="danger" variant="light" onPress={onClose}>
