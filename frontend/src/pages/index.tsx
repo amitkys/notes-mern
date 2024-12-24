@@ -21,10 +21,10 @@ export default function IndexPage() {
           <Divider />
 
           <CardFooter className="flex justify-end gap-2">
-            <div className="bg-black rounded-full p-1">
+            <div className="bg-black rounded-full p-1 cursor-pointer">
               <RiEdit2Line className="text-primary-500 text-xl" />
             </div>
-            <div className="bg-black rounded-full p-1">
+            <div className="bg-black rounded-full p-1 cursor-pointer">
               <MdDelete className="text-red-500 text-xl" />
             </div>
           </CardFooter>
