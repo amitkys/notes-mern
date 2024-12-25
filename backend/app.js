@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('./models/user');
@@ -8,6 +9,8 @@ const Note = require('./models/note');
 const authenticateToken = require('./utilities');
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 // Error handling for malformed JSON
@@ -233,6 +236,14 @@ app.put('/update-note-ispinned/:noteId', authenticateToken, async(req, res) =>{
         });
     }
 });
+app.get('/get-user', authenticateToken, async(req, res) => {
+    const {user} = req.user;
+    const isUserExist = await User.findById(user._id);
+    if(!isUserExist){
+        return res.status(500).json({message: 'user not found'});
+    }
+    return res.json({isUserExist, message: 'user found'});
+})
 app.listen(process.env.PORT, ()=> {
     console.log(`app is live on ${process.env.PORT}`)
 })
