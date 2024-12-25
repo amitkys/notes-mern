@@ -2,9 +2,10 @@
 import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { SVGProps, useState } from "react";
+import { FormEvent, SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
+import axiosInstance from "@/utils/axiosInstance";
 
 export const EyeSlashFilledIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
   return (
@@ -72,21 +73,37 @@ export default function LoginUI() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+ const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => { 
+    e.preventDefault();
+    
+    const formData = new FormData(e.currentTarget); // Extract form data
+    const username = formData.get("username") as string;
+    const email = formData.get("email") as string;
+
+    try{
+      const response = await axiosInstance.post("/login", {
+        email: email,
+        password: password
+      })
+    }
+  }
+
   return (
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-4xl  font-bold text-center text-primary ">Login to App</h1>
         <Form
           className="w-full max-w-md flex items-center justify-center flex-col gap-4  p-8 rounded-3xl"
           validationBehavior="native"
+          onSubmit={handleLogin}
         >
           <Input
             isRequired
-            errorMessage="Please enter a valid username"
-            label="Username"
+            errorMessage="Please enter a valid email"
+            label="Email"
             labelPlacement="outside"
-            name="username"
-            placeholder="Enter your username"
-            type="text"
+            name="email"
+            placeholder="Enter your email"
+            type="email"
           />
 
           <Input
@@ -106,10 +123,10 @@ export default function LoginUI() {
             </button>
           }
             errorMessage="Password is required"
-            label="Email"
+            label="Password"
             labelPlacement="outside"
-            name="email"
-            placeholder="Enter password"
+            name="password"
+            placeholder="Enter password here"
            type={isVisible ? "text" : "password"} 
           />
           <div className="flex gap-2">
