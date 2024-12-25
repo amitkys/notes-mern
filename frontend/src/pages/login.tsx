@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import { FormEvent, SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { Link, useNavigate } from "react-router-dom";
+
 import axiosInstance from "@/utils/axiosInstance";
 
 export const EyeSlashFilledIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
@@ -86,10 +87,19 @@ export default function LoginUI() {
         email: email,
         password: password
       });
+
       // handle successful login
       if(response.data && response.data.accessToken){
         localStorage.setItem("token", response.data.accessToken);
-        navigate("/hello")
+        navigate("/");
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    }catch(e:any){
+      if(e.response.data.error){
+        alert(e.response.data.message);
+      } 
+      else{
+        alert('unexpected error');
       }
     }
   }

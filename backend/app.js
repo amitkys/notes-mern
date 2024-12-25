@@ -56,32 +56,37 @@ app.post('/create-user', async (req, res) => {
 app.post('/login', async (req, res) => {
     const {email, password} = req.body;
 
-    if(!email || !password){
-        res.status(400).json({message: 'All flied are required'});
-    }
+    try{
+        if(!email || !password){
+            res.status(400).json({error: true, message: 'All flied are required'});
+        }
 
-    const userInfo = await User.findOne({email: email});
+        const userInfo = await User.findOne({email: email});
 
-    if(!userInfo){
-        res.status(400).json({message: 'user not found'});
-    }
+        if(!userInfo){
+            return res.status(400).json({error: true, message: 'Invalid Credential'});
+        }
 
-    if(userInfo.email == email && userInfo.password == password){
-        const user = {user: userInfo};
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: "36000m",
-        });
-        return res.json({
-            errro: false,
-            message: "Login successful",
-            email,
-            accessToken,
-        });
-    }else{
-        return res.json({
-            error: true,
-            message: "Injvalid Credentials" 
-        });
+        if(userInfo.email == email && userInfo.password == password){
+            const user = {user: userInfo};
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: "36000m",
+            });
+            return res.json({
+                errro: false,
+                message: "Login successful",
+                email,
+                accessToken,
+            });
+        }else{
+            return res.json({
+                error: true,
+                message: "Invalid Credentials" 
+            });
+        }
+    }catch(e){
+        console.log('error in login');
+        console.log(e.message);
     }
 });
 app.post('/add-note', authenticateToken, async(req, res) => {
