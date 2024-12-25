@@ -27,15 +27,6 @@ export default function SignUpUI() {
           type="text"
         />
 
-        <Input
-          isRequired
-          errorMessage="Please enter a valid username"
-          label="Username"
-          labelPlacement="outside"
-          name="username"
-          placeholder="Enter your username"
-          type="text"
-        />
 
         <Input
           isRequired
@@ -64,18 +55,18 @@ export default function SignUpUI() {
             </button>
           }
           errorMessage="Password"
-          label="Email"
+          label="Password"
           labelPlacement="outside"
           name="email"
           placeholder="Enter password"
           type={isVisible ? "text" : "password"}
         />
         <div className="flex gap-2">
-          <Button color="primary" type="submit">
-            Submit
-          </Button>
           <Button type="reset" variant="flat">
             Reset
+          </Button>
+          <Button color="primary" type="submit">
+            Submit
           </Button>
         </div>
       </Form>
