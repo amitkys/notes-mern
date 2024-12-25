@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import SignUpUI from "./pages/signUp/signUp";
 
+
 import IndexPage from "@/pages/index";
 import LoginPage from "@/pages/login";
 

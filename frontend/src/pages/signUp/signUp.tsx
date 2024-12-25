@@ -2,6 +2,7 @@ import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 
 import { EyeSlashFilledIcon } from "@/pages/login";
 import { EyeFilledIcon } from "@/pages/login";
@@ -62,7 +63,11 @@ export default function SignUpUI() {
           type={isVisible ? "text" : "password"}
         />
         <div className="flex gap-2">
-          <Button type="reset" variant="flat">
+          <Button
+            type="reset"
+            variant="flat"
+            onClick={() => toast.success("reset done")}
+          >
             Reset
           </Button>
           <Button color="primary" type="submit">
@@ -70,6 +75,7 @@ export default function SignUpUI() {
           </Button>
         </div>
       </Form>
+      <Toaster />
     </div>
   );
 }
