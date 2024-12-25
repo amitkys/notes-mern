@@ -54,41 +54,41 @@ app.post('/create-user', async (req, res) => {
     });
 });
 app.post('/login', async (req, res) => {
-    const {email, password} = req.body;
+  const { email, password } = req.body;
 
-    try{
-        if(!email || !password){
-            res.status(400).json({error: true, message: 'All flied are required'});
-        }
+  if (!email || !password) {
+    return res.status(400).json({ error: true, message: 'All fields are required' });
+  }
 
-        const userInfo = await User.findOne({email: email});
+  try {
+    const userInfo = await User.findOne({ email });
 
-        if(!userInfo){
-            return res.status(400).json({error: true, message: 'Invalid Credential'});
-        }
-
-        if(userInfo.email == email && userInfo.password == password){
-            const user = {user: userInfo};
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: "36000m",
-            });
-            return res.json({
-                errro: false,
-                message: "Login successful",
-                email,
-                accessToken,
-            });
-        }else{
-            return res.json({
-                error: true,
-                message: "Invalid Credentials" 
-            });
-        }
-    }catch(e){
-        console.log('error in login');
-        console.log(e.message);
+    if (!userInfo) {
+      return res.status(404).json({ error: true, message: 'Email not found' });
     }
+
+    if (userInfo.password !== password) {
+      return res.status(401).json({ error: true, message: 'Invalid Credentials' });
+    }
+
+    const user = { id: userInfo._id, email: userInfo.email };
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "10h",
+    });
+
+    return res.json({
+      error: false,
+      message: "Login successful",
+      email,
+      accessToken,
+    });
+  } catch (e) {
+    console.error('Error during login:', e.message);
+    return res.status(500).json({ error: true, message: 'Server error' });
+  }
 });
+
+
 app.post('/add-note', authenticateToken, async(req, res) => {
     const {title, content, tags} = req.body;
     const {user} = req.user;

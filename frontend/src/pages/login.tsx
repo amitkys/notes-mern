@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import { FormEvent, SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import axiosInstance from "@/utils/axiosInstance";
 
@@ -92,14 +93,15 @@ export default function LoginUI() {
       if(response.data && response.data.accessToken){
         localStorage.setItem("token", response.data.accessToken);
         navigate("/");
-      }
+        toast.success('Login successful');
+      
+      } 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     }catch(e:any){
       if(e.response.data.error){
-        alert(e.response.data.message);
-      } 
-      else{
-        alert('unexpected error');
+        toast.error(e.response.data.message);
+      }else{
+        toast.error('unexpected error')
       }
     }
   }

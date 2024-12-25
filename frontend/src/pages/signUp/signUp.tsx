@@ -2,7 +2,7 @@ import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 import { EyeSlashFilledIcon } from "@/pages/login";
 import { EyeFilledIcon } from "@/pages/login";
@@ -66,7 +66,7 @@ export default function SignUpUI() {
           <Button
             type="reset"
             variant="flat"
-            onClick={() => toast.success("reset done")}
+            onClick={() => toast.success("Reset done")}
           >
             Reset
           </Button>
@@ -75,7 +75,6 @@ export default function SignUpUI() {
           </Button>
         </div>
       </Form>
-      <Toaster />
     </div>
   );
 }
