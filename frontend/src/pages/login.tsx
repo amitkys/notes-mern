@@ -105,7 +105,7 @@ export default function LoginUI() {
               )}
             </button>
           }
-            errorMessage="Password"
+            errorMessage="Password is required"
             label="Email"
             labelPlacement="outside"
             name="email"
