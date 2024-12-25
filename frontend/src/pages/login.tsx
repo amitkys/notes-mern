@@ -4,7 +4,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { FormEvent, SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "@/utils/axiosInstance";
 
 export const EyeSlashFilledIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
@@ -70,6 +70,7 @@ export const EyeFilledIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGEl
 
 export default function LoginUI() {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -77,14 +78,19 @@ export default function LoginUI() {
     e.preventDefault();
     
     const formData = new FormData(e.currentTarget); // Extract form data
-    const username = formData.get("username") as string;
     const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     try{
       const response = await axiosInstance.post("/login", {
         email: email,
         password: password
-      })
+      });
+      // handle successful login
+      if(response.data && response.data.accessToken){
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/hello")
+      }
     }
   }
 
