@@ -8,7 +8,13 @@ import DeleteNoteModal from "@/components/cards/deleteNoteModal";
 import UpdateNoteModal from "@/components/cards/updateNoteModal";
 import { Note } from "@/types";
 
-export default function NotesCard({ note }: { note: Note }) {
+export default function NotesCard({
+  note,
+  getAllNotes,
+}: {
+  note: Note;
+  getAllNotes: any;
+}) {
   // Separate disclosures for each modal
   const updateNoteDisclosure = useDisclosure();
   const deleteNodeDisclosure = useDisclosure();
@@ -49,7 +55,9 @@ export default function NotesCard({ note }: { note: Note }) {
       />
       {/* Delete Modal */}
       <DeleteNoteModal
+        getAllNotes={getAllNotes}
         isOpen={deleteNodeDisclosure.isOpen}
+        noteId={note._id}
         onClose={deleteNodeDisclosure.onClose}
       />
     </div>

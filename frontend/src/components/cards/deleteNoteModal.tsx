@@ -6,15 +6,44 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+import axiosInstance from "@/utils/axiosInstance";
 
 interface CreateNoteModalProps {
   isOpen: boolean;
+  noteId: any;
+  getAllNotes: () => void; // Add this prop
   onClose: (open: boolean) => void;
 }
 export default function DeleteNoteModal({
   isOpen,
   onClose,
+  getAllNotes,
+  noteId,
 }: CreateNoteModalProps) {
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      const response = await axiosInstance.delete(`/delete-note/${noteId}`);
+
+      if (response.status == 200 && response.data.error == false) {
+        getAllNotes();
+        onClose(false);
+        navigate("/");
+        toast.success("Notes deleted");
+      }
+    } catch (error: any) {
+      if (error.response.data.error) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
   return (
     <Modal
       backdrop="blur"
@@ -35,7 +64,7 @@ export default function DeleteNoteModal({
               <Button color="danger" variant="light" onPress={onClose}>
                 Cancel
               </Button>
-              <Button color="primary" onPress={onClose}>
+              <Button color="primary" onClick={handleDelete}>
                 Confirm
               </Button>
             </ModalFooter>

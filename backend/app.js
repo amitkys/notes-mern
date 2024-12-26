@@ -176,23 +176,24 @@ app.get('/all-notes', authenticateToken, async (req, res) => {
     }
 });
 app.delete('/delete-note/:noteId', authenticateToken, async(req, res) => {
-    const noteId = req.params.noteId;
-    const {user} = req.user;
+
 
     try{
+        const noteId = req.params.noteId;
+        const user = req.user;
         const isNotesExist = await Note.findOne({_id: noteId, userId: user._id});
 
         if(!isNotesExist){
             return res.status(400).json({
                 error: true,
-                message: 'notes not found',
+                message: 'Notes not found',
             });
         }
         await Note.deleteOne({_id: noteId, userId: user._id});
         
-        return res.json({
+        return res.status(200).json({
             error: false,
-            message: 'note deleted',
+            message: 'Notes deleted',
         });
     }
     catch(err){

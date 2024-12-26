@@ -43,7 +43,9 @@ export default function IndexPage() {
       {notes && notes?.length > 0 ? (
         <div className=" grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* {all notes} */}
-          {notes?.map((note) => <NotesCard key={note._id} note={note} />)}
+          {notes?.map((note) => (
+            <NotesCard key={note._id} getAllNotes={getAllNotes} note={note} />
+          ))}
         </div>
       ) : (
         <div className=" flex items-center justify-center mt-[140px] text-center">
