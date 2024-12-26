@@ -2,6 +2,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { useDisclosure } from "@nextui-org/modal";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Tooltip } from "@nextui-org/tooltip";
 
 import CreateNoteModal from "@/components/cards/createNoteModal";
 import DefaultLayout from "@/layouts/default";
@@ -33,12 +34,14 @@ export default function IndexPage() {
   return (
     <DefaultLayout>
       {/* Button to open CreateNoteModal */}
-      <button
-        className="fixed bottom-6 right-6 z-50 border-none"
-        onClick={createNoteDisclosure.onOpen} // Open the modal
-      >
-        <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
-      </button>
+      <Tooltip className="capitalize" color={"success"} content={"Add notes"}>
+        <button
+          className="fixed bottom-6 right-6 z-50 border-none hover:bg-[#022C22] rounded-full p-1 transition-colors duration-300"
+          onClick={createNoteDisclosure.onOpen} // Open the modal
+        >
+          <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
+        </button>
+      </Tooltip>
 
       {notes && notes?.length > 0 ? (
         <div className=" grid grid-cols-1 lg:grid-cols-3 gap-4">
