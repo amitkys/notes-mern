@@ -8,6 +8,7 @@ import {
 import { Input, Textarea } from "@nextui-org/input";
 import { Form } from "@nextui-org/form";
 import { Button } from "@nextui-org/button";
+import { useState } from "react";
 
 interface CreateNoteModalProps {
   isOpen: boolean;
@@ -18,6 +19,28 @@ export default function CreateNoteModal({
   isOpen,
   onClose,
 }: CreateNoteModalProps) {
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState<string>("");
+
+  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTagInput(value);
+
+    // Add tag if a comma is entered
+    if (value.endsWith(",")) {
+      const newTag = value.slice(0, -1).trim();
+
+      if (newTag && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
+      }
+      setTagInput(""); // Clear the input field after adding the tag
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
   return (
     <Modal
       backdrop="blur"
@@ -36,11 +59,6 @@ export default function CreateNoteModal({
                 action=""
                 id="create-notes-form"
                 validationBehavior="native"
-                // onSubmit={(e) => {
-                //   e.preventDefault();
-                //   // Handle form submission logic here
-                //   onClose(); // Close the modal after submission
-                // }}
               >
                 <Input
                   isRequired
@@ -55,9 +73,32 @@ export default function CreateNoteModal({
                   errorMessage="write any description"
                   label="Description"
                   variant="underlined"
-                  // eslint-disable-next-line no-console
                   onClear={() => console.log("textarea cleared")}
                 />
+                <Input
+                  label="Tags"
+                  placeholder="comma separate"
+                  value={tagInput}
+                  variant="underlined"
+                  onChange={handleTagChange}
+                />
+                <div className="flex gap-x-1 flex-shrink gap-y-1  flex-wrap">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="bg-[#27272A] px-1 rounded-md flex items-center"
+                    >
+                      {tag}
+                      <button
+                        className="ml-1 text-red-500"
+                        type="button"
+                        onClick={() => removeTag(tag)}
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
               </Form>
             </ModalBody>
             <ModalFooter>
