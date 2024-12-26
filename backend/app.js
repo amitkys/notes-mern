@@ -254,6 +254,7 @@ app.get('/get-user', authenticateToken, async(req, res) => {
         }
 
         return res.json({
+            error: false,
             user: {
                 _id: isUserExist._id,
                 name: isUserExist.name,
