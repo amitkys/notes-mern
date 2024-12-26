@@ -51,7 +51,7 @@ app.post('/create-user', async (req, res) => {
         error: false,
         user,
         accessToken,
-        message: "Registration successful",
+        message: "Account created.",
     });
 });
 app.post('/login', async (req, res) => {

@@ -1,16 +1,48 @@
 import { Form } from "@nextui-org/form";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import { EyeSlashFilledIcon } from "@/pages/login";
 import { EyeFilledIcon } from "@/pages/login";
+import axiosInstance from "@/utils/axiosInstance";
 
 export default function SignUpUI() {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleForm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget); // Extract form data
+    const fullName = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    try {
+      const response = await axiosInstance.post("/create-user", {
+        fullName,
+        email,
+        password,
+      });
+
+      if (response.data && response.data.accessToken) {
+        localStorage.clear();
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/");
+        toast.success("Account created!");
+      }
+    } catch (error: any) {
+      if (error.response.data.error) {
+        toast.error(error.response.data.message);
+      }
+      toast.error("Unexpected error");
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -18,6 +50,7 @@ export default function SignUpUI() {
       <Form
         className="w-full max-w-md flex items-center justify-center flex-col gap-4  p-8 rounded-3xl"
         validationBehavior="native"
+        onSubmit={handleForm}
       >
         <Input
           isRequired
@@ -27,7 +60,6 @@ export default function SignUpUI() {
           placeholder="Enter your name"
           type="text"
         />
-
 
         <Input
           isRequired
@@ -58,7 +90,7 @@ export default function SignUpUI() {
           errorMessage="Password"
           label="Password"
           labelPlacement="outside"
-          name="email"
+          name="password"
           placeholder="Enter password"
           type={isVisible ? "text" : "password"}
         />
