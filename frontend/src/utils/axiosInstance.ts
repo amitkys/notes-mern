@@ -16,10 +16,8 @@ axiosInstance.interceptors.request.use(
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-    } else {
-      console.warn("No token found in localStorage");
     }
-    console.log("Request headers:", config.headers); // Check headers
+
     return config;
   },
   (error) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -25,8 +25,15 @@ export const AcmeLogo = () => {
   );
 };
 
+type User = {
+  _id: any;
+  name: string;
+  email: string;
+};
+
 export function NavbarUI() {
-  const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState<User | null>(null);
   const getUserInfo = async () => {
     try {
       const response = await axiosInstance.get("/get-user");
@@ -36,9 +43,11 @@ export function NavbarUI() {
       }
     } catch (error: any) {
       if (error.response.data.error) {
+        localStorage.clear();
+        navigate("/login");
         toast.error(error.response.data.message);
       }
-      toast.error("Server error");
+      navigate("/login");
     }
   };
 
@@ -59,7 +68,7 @@ export function NavbarUI() {
           className="sm:hidden"
         /> */}
         <NavbarBrand>
-          <p>username</p>
+          <p>{userInfo?.name}</p>
           {/* <p className="font-bold text-inherit">ACME</p> */}
         </NavbarBrand>
       </NavbarContent>

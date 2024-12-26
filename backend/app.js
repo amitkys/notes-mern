@@ -257,7 +257,7 @@ app.get('/get-user', authenticateToken, async(req, res) => {
             error: false,
             user: {
                 _id: isUserExist._id,
-                name: isUserExist.name,
+                name: isUserExist.fullName,
                 email: isUserExist.email, 
             },
             message: 'user found',
