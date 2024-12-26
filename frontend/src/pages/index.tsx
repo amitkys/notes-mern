@@ -4,9 +4,26 @@ import { useDisclosure } from "@nextui-org/modal";
 import CreateNoteModal from "@/components/cards/createNoteModal";
 import DefaultLayout from "@/layouts/default";
 import NotesCard from "@/components/cards/notes-Card";
+import { useEffect } from "react";
+import axiosInstance from "@/utils/axiosInstance";
 
 export default function IndexPage() {
   const createNoteDisclosure = useDisclosure();
+
+  const getAllNotes = async () => {
+    try{
+      const response = await axiosInstance.get("/all-notes");
+      console.log(response);
+    }catch(error:any){
+      console.log('notes not fetched');
+    }
+  }
+
+  useEffect(() => {
+    getAllNotes();
+
+    return () =>{}
+  }, []);
 
   return (
     <DefaultLayout>
