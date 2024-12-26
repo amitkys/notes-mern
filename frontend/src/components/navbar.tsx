@@ -95,8 +95,20 @@ export function NavbarUI() {
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
+          <Button
+            as={Link}
+            color="primary"
+            variant="flat"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/login");
+              toast("Logged out", {
+                icon: "🥹",
+                style: { background: "#1E3A8A", color: "#BFDBFE" },
+              });
+            }}
+          >
+            Log out
           </Button>
         </NavbarItem>
       </NavbarContent>
