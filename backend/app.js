@@ -243,12 +243,21 @@ app.put('/update-note-ispinned/:noteId', authenticateToken, async(req, res) =>{
 });
 app.get('/get-user', authenticateToken, async(req, res) => {
     const {user} = req.user;
-    const isUserExist = await User.findById(user._id);
-    if(!isUserExist){
-        return res.status(500).json({message: 'user not found'});
+    try{
+        const isUserExist = await User.findById(user._id);
+        if(!isUserExist){
+            return res.status(401).json({message: 'user not found'});
+        }
+        return res.json({isUserExist, message: 'user found'});
     }
-    return res.json({isUserExist, message: 'user found'});
-})
+    catch(error){
+        console.log(`error while getting user info`, error);
+        return res.status(401).json({
+            error: true,
+            message: 'Server error',
+        });
+    }
+});
 app.listen(process.env.PORT, ()=> {
     console.log(`app is live on ${process.env.PORT}`)
 })
