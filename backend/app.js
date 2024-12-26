@@ -250,7 +250,7 @@ app.get('/get-user', authenticateToken, async(req, res) => {
         const user = req.user;
         const isUserExist = await User.findById(user._id);
         if(!isUserExist){
-            return res.status(401).json({message: 'user not found'});
+            return res.status(401).json({error: true, message: 'user not found'});
         }
 
         return res.json({

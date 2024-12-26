@@ -8,6 +8,7 @@ import {
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import axiosInstance from "@/utils/axiosInstance";
 
@@ -25,19 +26,25 @@ export const AcmeLogo = () => {
 };
 
 export function NavbarUI() {
-  // token is printing here
-  console.log(localStorage.getItem("token"));
+  const [userInfo, setUserInfo] = useState(null);
   const getUserInfo = async () => {
-  try{
-    const response = await axiosInstance.get('/get-user');
-    console.log(response);
-  }catch(e){
-    console.log('error fetching user data');  
-  }
-  }
+    try {
+      const response = await axiosInstance.get("/get-user");
+
+      if (response.data && response.data.user) {
+        setUserInfo(response.data.user);
+      }
+    } catch (error: any) {
+      if (error.response.data.error) {
+        toast.error(error.response.data.message);
+      }
+      toast.error("Server error");
+    }
+  };
 
   useEffect(() => {
     getUserInfo();
+
     return () => {};
   }, []);
 
