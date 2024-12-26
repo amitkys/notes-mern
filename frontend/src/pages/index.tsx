@@ -18,8 +18,33 @@ export default function IndexPage() {
         <IoIosAddCircleOutline className="text-4xl text-green-600 lg:text-6xl" />
       </button>
 
-      <div className="min-h-screen">
+      <div className=" grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* {all notes} */}
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
+        <NotesCard />
         <NotesCard />
       </div>
 

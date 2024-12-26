@@ -12,7 +12,7 @@ export default function NotesCard() {
   const deleteNodeDisclosure = useDisclosure();
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3">
+    <div className="">
       <Card className="shadow-lg border border-gray-600">
         <CardHeader>
           <h1>This is heading</h1>
@@ -24,7 +24,7 @@ export default function NotesCard() {
         </CardBody>
         <Divider />
 
-        <CardFooter className="flex justify-end gap-2">
+        <CardFooter className="flex justify-end gap-x-1">
           <button
             className="bg-black rounded-full p-1 cursor-pointer"
             onClick={updateNoteDisclosure.onOpen}

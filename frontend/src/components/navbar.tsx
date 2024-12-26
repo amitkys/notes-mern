@@ -97,7 +97,7 @@ export function NavbarUI() {
         <NavbarItem>
           <Button
             as={Link}
-            color="primary"
+            color="danger"
             variant="flat"
             onClick={() => {
               localStorage.clear();

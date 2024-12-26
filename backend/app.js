@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.post('/create-user', async (req, res) => {
     const {fullName, email, password} = req.body;
-    console.log(fullName, email, password);
+    // console.log(fullName, email, password);
     if(!fullName || !email || !password){
         return res.status(400).json({message: 'all fields are required'});
     }
