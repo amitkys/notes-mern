@@ -6,7 +6,9 @@ import { MdDelete } from "react-icons/md";
 
 import DeleteNoteModal from "@/components/cards/deleteNoteModal";
 import UpdateNoteModal from "@/components/cards/updateNoteModal";
-export default function NotesCard() {
+import { Note } from "@/types";
+
+export default function NotesCard({ note }: { note: Note }) {
   // Separate disclosures for each modal
   const updateNoteDisclosure = useDisclosure();
   const deleteNodeDisclosure = useDisclosure();
@@ -15,12 +17,12 @@ export default function NotesCard() {
     <div className="">
       <Card className="shadow-lg border border-gray-600">
         <CardHeader>
-          <h1>This is heading</h1>
+          <h1>{note.title}</h1>
         </CardHeader>
         <Divider />
 
         <CardBody>
-          <p>Make beautiful websites regardless of your design experience.</p>
+          <p>{note.content}</p>
         </CardBody>
         <Divider />
 

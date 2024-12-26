@@ -17,11 +17,13 @@ import axiosInstance from "@/utils/axiosInstance";
 interface CreateNoteModalProps {
   isOpen: boolean;
   onClose: (open: boolean) => void;
+  getAllNotes: () => void; // Add this prop
 }
 
 export default function CreateNoteModal({
   isOpen,
   onClose,
+  getAllNotes,
 }: CreateNoteModalProps) {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
@@ -62,6 +64,7 @@ export default function CreateNoteModal({
       });
 
       if (response.status == 200 && response.data.error == false) {
+        getAllNotes();
         onClose(false);
         navigate("/");
         toast.success(response.data.message);
@@ -108,15 +111,14 @@ export default function CreateNoteModal({
                   isRequired
                   errorMessage="write any description"
                   label="Description"
-                  variant="underlined"
                   name="content"
-                  onClear={() => console.log("textarea cleared")}
+                  variant="underlined"
                 />
                 <Input
                   label="Tags"
+                  name="tags"
                   placeholder="comma separate"
                   value={tagInput}
-                  name="tags"
                   variant="underlined"
                   onChange={handleTagChange}
                 />
