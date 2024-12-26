@@ -24,7 +24,7 @@ export const AcmeLogo = () => {
   );
 };
 
-export  function NavbarUI() {
+export function NavbarUI() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
@@ -41,20 +41,23 @@ export  function NavbarUI() {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar
+      className="dark text-foreground bg-background"
+      onMenuOpenChange={setIsMenuOpen}
+    >
       <NavbarContent>
-        <NavbarMenuToggle
+        {/* <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
-        />
+        /> */}
         <NavbarBrand>
-          <AcmeLogo />
-          <p className="font-bold text-inherit">ACME</p>
+          <p>username</p>
+          {/* <p className="font-bold text-inherit">ACME</p> */}
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
@@ -68,7 +71,7 @@ export  function NavbarUI() {
           <Link color="foreground" href="#">
             Integrations
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
@@ -80,7 +83,7 @@ export  function NavbarUI() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu>
+      {/* <NavbarMenu className="dark text-foreground bg-background">
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
@@ -99,7 +102,7 @@ export  function NavbarUI() {
             </Link>
           </NavbarMenuItem>
         ))}
-      </NavbarMenu>
+      </NavbarMenu> */}
     </Navbar>
   );
 }
