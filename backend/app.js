@@ -92,10 +92,11 @@ app.post('/login', async (req, res) => {
 
 app.post('/add-note', authenticateToken, async(req, res) => {
     const {title, content, tags} = req.body;
-    const {user} = req.user;
+    const user = req.user;
+    // console.log('from add note, this is user', user);
 
-    if(!title) return res.status(400).json({message: 'title is required'});
-    if(!content) return res.status(400).json({message: 'content is required'});
+    if(!title) return res.status(400).json({error: true, message: 'title is required'});
+    if(!content) return res.status(400).json({error: true, message: 'content is required'});
 
     try{
         const note = new Note({
@@ -107,10 +108,10 @@ app.post('/add-note', authenticateToken, async(req, res) => {
 
         await note.save();
 
-        return res.json({
+        return res.status(200).json({
             error: false,
             note,
-            message: 'notes added successfully'
+            message: 'Notes added'
         });
 
     }catch(e){

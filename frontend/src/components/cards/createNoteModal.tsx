@@ -8,7 +8,11 @@ import {
 import { Input, Textarea } from "@nextui-org/input";
 import { Form } from "@nextui-org/form";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
+import axiosInstance from "@/utils/axiosInstance";
 
 interface CreateNoteModalProps {
   isOpen: boolean;
@@ -21,9 +25,11 @@ export default function CreateNoteModal({
 }: CreateNoteModalProps) {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
+  const navigate = useNavigate();
 
-  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTagChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+
     setTagInput(value);
 
     // Add tag if a comma is entered
@@ -39,6 +45,34 @@ export default function CreateNoteModal({
 
   const removeTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
+  const handleForm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget); // Extract form data
+    const title = formData.get("title");
+    const content = formData.get("content");
+
+    try {
+      const response = await axiosInstance.post("/add-note", {
+        title,
+        content,
+        tags,
+      });
+
+      if (response.status == 200 && response.data.error == false) {
+        onClose(false);
+        navigate("/");
+        toast.success(response.data.message);
+        setTags([]);
+      }
+    } catch (error: any) {
+      if (error.response.data.error) {
+        toast.error(error.response.data.message);
+      }
+      toast.error("Unexpected error");
+    }
   };
 
   return (
@@ -59,12 +93,14 @@ export default function CreateNoteModal({
                 action=""
                 id="create-notes-form"
                 validationBehavior="native"
+                onSubmit={handleForm}
               >
                 <Input
                   isRequired
                   errorMessage="Title is required"
                   label="Title"
                   labelPlacement="outside"
+                  name="title"
                   variant="bordered"
                 />
                 <Textarea
@@ -73,12 +109,14 @@ export default function CreateNoteModal({
                   errorMessage="write any description"
                   label="Description"
                   variant="underlined"
+                  name="content"
                   onClear={() => console.log("textarea cleared")}
                 />
                 <Input
                   label="Tags"
                   placeholder="comma separate"
                   value={tagInput}
+                  name="tags"
                   variant="underlined"
                   onChange={handleTagChange}
                 />
