@@ -86,7 +86,7 @@ export default function CreateNoteModal({
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-[#27272A] px-1 rounded-md flex items-center"
+                      className="bg-[#27272A] px-1 rounded-md flex items-center text-sm"
                     >
                       {tag}
                       <button
