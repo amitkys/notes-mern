@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
+import { useNavigate } from "react-router-dom";
+
+import axiosInstance from "@/utils/axiosInstance";
 
 export const AcmeLogo = () => {
   return (
@@ -25,25 +25,26 @@ export const AcmeLogo = () => {
 };
 
 export function NavbarUI() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  // token is printing here
+  console.log(localStorage.getItem("token"));
+  const getUserInfo = async () => {
+  try{
+    const response = await axiosInstance.get('/get-user');
+    console.log(response);
+  }catch(e){
+    console.log('error fetching user data');  
+  }
+  }
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+  useEffect(() => {
+    getUserInfo();
+    return () => {};
+  }, []);
 
   return (
     <Navbar
       className="dark text-foreground bg-background"
-      onMenuOpenChange={setIsMenuOpen}
+      // onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
         {/* <NavbarMenuToggle
@@ -106,4 +107,3 @@ export function NavbarUI() {
     </Navbar>
   );
 }
-

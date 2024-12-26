@@ -45,7 +45,8 @@ app.post('/create-user', async (req, res) => {
     const user = new User({fullName, email, password});
     await user.save();
     
-    const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '36000m'});
+    const userInfoForJWT = {_id: user._id, email: user.email};
+    const accessToken = jwt.sign(userInfoForJWT, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '36000m'});
     return res.json({
         error: false,
         user,
@@ -71,7 +72,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ error: true, message: 'Invalid Credentials' });
     }
 
-    const user = { id: userInfo._id, email: userInfo.email };
+    const user = { _id: userInfo._id, email: userInfo.email };
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "10h",
     });
@@ -242,13 +243,24 @@ app.put('/update-note-ispinned/:noteId', authenticateToken, async(req, res) =>{
     }
 });
 app.get('/get-user', authenticateToken, async(req, res) => {
-    const {user} = req.user;
+    // console.log('content inside req.user', req.user);
+    // console.log('user from app file', user);
+    // console.log('user id from app file', user._id);
     try{
+        const user = req.user;
         const isUserExist = await User.findById(user._id);
         if(!isUserExist){
             return res.status(401).json({message: 'user not found'});
         }
-        return res.json({isUserExist, message: 'user found'});
+
+        return res.json({
+            user: {
+                _id: isUserExist._id,
+                name: isUserExist.name,
+                email: isUserExist.email, 
+            },
+            message: 'user found',
+        });
     }
     catch(error){
         console.log(`error while getting user info`, error);

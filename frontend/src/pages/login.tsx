@@ -88,7 +88,7 @@ export default function LoginUI() {
         email: email,
         password: password
       });
-
+      
       // handle successful login
       if(response.data && response.data.accessToken){
         localStorage.setItem("token", response.data.accessToken);
