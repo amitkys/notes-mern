@@ -67,6 +67,7 @@ export default function UpdateNoteModal({
       });
 
       if (response.status == 200 && response.data.error == false) {
+        onClose(false);
         getAllNotes();
         navigate("/");
         toast.success("Notes updated.");
