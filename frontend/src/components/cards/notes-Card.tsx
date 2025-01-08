@@ -3,16 +3,15 @@ import { Divider } from "@nextui-org/divider";
 import { useDisclosure } from "@nextui-org/modal";
 import { RiEdit2Line } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
-
-import DeleteNoteModal from "@/components/cards/deleteNoteModal";
-import UpdateNoteModal from "@/components/cards/updateNoteModal";
 import { RiPushpinLine } from "react-icons/ri";
 import { RiPushpinFill } from "react-icons/ri";
-import { Note } from "@/types";
 import { useState } from "react";
-import axios from "axios";
-import axiosInstance from "@/utils/axiosInstance";
 import toast from "react-hot-toast";
+
+import axiosInstance from "@/utils/axiosInstance";
+import { Note } from "@/types";
+import UpdateNoteModal from "@/components/cards/updateNoteModal";
+import DeleteNoteModal from "@/components/cards/deleteNoteModal";
 
 export default function NotesCard({
   note,
