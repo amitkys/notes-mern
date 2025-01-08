@@ -25,7 +25,7 @@ export default function IndexPage() {
       setNotes(response.data.notes);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error: any) {
-      toast.error("Something went wrong");
+      // toast.error("Something went wrong");
     } finally {
       setLoading(false); // Stop loading
     }

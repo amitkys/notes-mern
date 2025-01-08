@@ -40,12 +40,14 @@ export function NavbarUI() {
 
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
+      } else {
+        navigate("/login");
       }
     } catch (error: any) {
       if (error.response.data.error) {
         localStorage.clear();
         navigate("/login");
-        toast.error(error.response.data.message);
+        // toast.error(error.response.data.message);
       }
       navigate("/login");
     }
