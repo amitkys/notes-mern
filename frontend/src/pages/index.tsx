@@ -1,7 +1,6 @@
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useDisclosure } from "@nextui-org/modal";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Spinner } from "@nextui-org/spinner";
 
