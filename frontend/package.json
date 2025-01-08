@@ -1,13 +1,13 @@
 {
-    "homepage":"https://amitkys.github.io/login",
+    "homepage":"https://amitkys.github.io/notes-mern",
 	"name": "vite-template",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-        "predeploy":"tsc && vite dist",
-        "deploy":"gh-pages -d dist",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist",
 		"build": "tsc && vite build",
 		"lint": "eslint -c .eslintrc.json ./src/**/**/*.{ts,tsx} --fix",
 		"preview": "vite preview"
