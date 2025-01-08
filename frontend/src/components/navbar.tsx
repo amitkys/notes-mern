@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {Button as Sbutton } from "@/components/ui/button";
 import {
   Navbar,
   NavbarBrand,
@@ -97,10 +98,8 @@ export function NavbarUI() {
           <Link href="#">Login</Link>
         </NavbarItem> */}
         <NavbarItem>
-          <Button
-            as={Link}
-            color="danger"
-            variant="flat"
+          <Sbutton
+            variant={"destructive"}
             onClick={() => {
               localStorage.clear();
               navigate("/login");
@@ -111,7 +110,7 @@ export function NavbarUI() {
             }}
           >
             Log out
-          </Button>
+          </Sbutton>
         </NavbarItem>
       </NavbarContent>
       {/* <NavbarMenu className="dark text-foreground bg-background">

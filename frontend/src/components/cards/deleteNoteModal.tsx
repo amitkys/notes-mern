@@ -6,10 +6,11 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
+import { Button as Sbutton} from "@/components/ui/button";
 import axiosInstance from "@/utils/axiosInstance";
 
 interface CreateNoteModalProps {
@@ -63,22 +64,22 @@ export default function DeleteNoteModal({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Delete Modal
+              Delete Notes
             </ModalHeader>
             <ModalBody>
               <p>Are you sure you want to delete this?</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button color="danger" onPress={onClose}>
                 Cancel
               </Button>
               <Button
+              as={Link}
                 color="primary"
                 disabled={isLoading} // Disable the button while loading
                 onClick={handleDelete}
               >
                 {isLoading ? "Deleting..." : "Confirm"}{" "}
-                {/* Change button text */}
               </Button>
             </ModalFooter>
           </>
