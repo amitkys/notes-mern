@@ -23,7 +23,7 @@ export default function NotesCard({
   // Separate disclosures for each modal
   const updateNoteDisclosure = useDisclosure();
   const deleteNodeDisclosure = useDisclosure();
-  const [isPinned, setisPinned] = useState(note.isPinned);
+  const [isPinned] = useState(note.isPinned);
   const handlePin = async () => {
     try {
       const pinStatus = !isPinned;
@@ -37,6 +37,7 @@ export default function NotesCard({
 
       if (response.status == 200 || response.data.error == false) {
         getAllNotes();
+        // setisPinned(pinStatus);
         if (isPinned) {
           toast.success("Unpinned");
         } else {
@@ -58,7 +59,11 @@ export default function NotesCard({
         <CardHeader className="flex flex-row justify-between">
           <h1>{note.title}</h1>
           <button onClick={handlePin}>
-            {isPinned ? <RiPushpinFill /> : <RiPushpinLine />}
+            {isPinned ? (
+              <RiPushpinFill className="text-green-500 text-lg" />
+            ) : (
+              <RiPushpinLine className="text-lg" />
+            )}
           </button>
         </CardHeader>
         <Divider />
