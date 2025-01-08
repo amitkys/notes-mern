@@ -208,7 +208,7 @@ app.put('/update-note-ispinned/:noteId', authenticateToken, async(req, res) =>{
     const noteId = req.params.noteId;
     
     const {isPinned} = req.body;
-    const {user} = req.user;
+    const user = req.user;
 
     try{
         const updatedNote = await Note.updateOne(

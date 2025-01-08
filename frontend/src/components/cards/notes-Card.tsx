@@ -6,7 +6,13 @@ import { MdDelete } from "react-icons/md";
 
 import DeleteNoteModal from "@/components/cards/deleteNoteModal";
 import UpdateNoteModal from "@/components/cards/updateNoteModal";
+import { RiPushpinLine } from "react-icons/ri";
+import { RiPushpinFill } from "react-icons/ri";
 import { Note } from "@/types";
+import { useState } from "react";
+import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
+import toast from "react-hot-toast";
 
 export default function NotesCard({
   note,
@@ -18,12 +24,43 @@ export default function NotesCard({
   // Separate disclosures for each modal
   const updateNoteDisclosure = useDisclosure();
   const deleteNodeDisclosure = useDisclosure();
+  const [isPinned, setisPinned] = useState(note.isPinned);
+  const handlePin = async () => {
+    try {
+      const pinStatus = !isPinned;
+
+      const response = await axiosInstance.put(
+        `/update-note-ispinned/${note._id}`,
+        {
+          isPinned: pinStatus,
+        },
+      );
+
+      if (response.status == 200 || response.data.error == false) {
+        getAllNotes();
+        if (isPinned) {
+          toast.success("Unpinned");
+        } else {
+          toast.success("Pinned");
+        }
+      }
+    } catch (error: any) {
+      if (error.response.data.error) {
+        toast.error("something went wrong");
+      } else {
+        toast.error("server issue while pinning notes");
+      }
+    }
+  };
 
   return (
     <div className="">
       <Card className="shadow-lg border border-gray-600">
-        <CardHeader>
+        <CardHeader className="flex flex-row justify-between">
           <h1>{note.title}</h1>
+          <button onClick={handlePin}>
+            {isPinned ? <RiPushpinFill /> : <RiPushpinLine />}
+          </button>
         </CardHeader>
         <Divider />
 
