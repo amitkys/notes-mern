@@ -50,12 +50,14 @@ export default function NotesCard({
 
       {/* Edit Modal */}
       <UpdateNoteModal
+        getAllNotes={getAllNotes}
         isOpen={updateNoteDisclosure.isOpen}
+        note={note}
         onClose={updateNoteDisclosure.onClose}
       />
       {/* Delete Modal */}
       <DeleteNoteModal
-        getAllNotes={getAllNotes}
+        getAllNotes={getAllNotes} // main function to update latest notes
         isOpen={deleteNodeDisclosure.isOpen}
         noteId={note._id}
         onClose={deleteNodeDisclosure.onClose}

@@ -69,6 +69,7 @@ export default function CreateNoteModal({
         navigate("/");
         toast.success(response.data.message);
         setTags([]);
+        setTagInput(""); // Clear the input field after adding the tag
       }
     } catch (error: any) {
       if (error.response.data.error) {

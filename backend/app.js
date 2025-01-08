@@ -124,7 +124,7 @@ app.post('/add-note', authenticateToken, async(req, res) => {
 app.put('/edit-note/:noteId', authenticateToken, async(req, res) => {
     const noteId = req.params.noteId;
     const {title, content, tags, isPinned} = req.body;
-    const {user} = req.user;
+    const user = req.user;
 
     if(!title || !content) return res.status(400).json({message: 'no change provided'});
 
