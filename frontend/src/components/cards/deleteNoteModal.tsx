@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
-import { Button as Sbutton} from "@/components/ui/button";
 import axiosInstance from "@/utils/axiosInstance";
 
 interface CreateNoteModalProps {
