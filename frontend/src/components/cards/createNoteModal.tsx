@@ -27,6 +27,7 @@ export default function CreateNoteModal({
 }: CreateNoteModalProps) {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState<string>("");
+  const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleTagChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +58,7 @@ export default function CreateNoteModal({
     const content = formData.get("content");
 
     try {
+      setisLoading(true);
       const response = await axiosInstance.post("/add-note", {
         title,
         content,
@@ -76,6 +78,8 @@ export default function CreateNoteModal({
         toast.error(error.response.data.message);
       }
       toast.error("Unexpected error");
+    } finally {
+      setisLoading(false);
     }
   };
 
@@ -146,8 +150,13 @@ export default function CreateNoteModal({
               <Button color="danger" variant="light" onPress={onClose}>
                 Cancel
               </Button>
-              <Button color="primary" form="create-notes-form" type="submit">
-                Confirm
+              <Button
+                color="primary"
+                disabled={isLoading}
+                form="create-notes-form"
+                type="submit"
+              >
+                {isLoading ? "Creating.." : "Create"}
               </Button>
             </ModalFooter>
           </>

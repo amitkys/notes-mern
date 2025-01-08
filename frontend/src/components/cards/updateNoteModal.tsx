@@ -31,6 +31,7 @@ export default function UpdateNoteModal({
   const [tags, setTags] = useState<string[]>(note.tags || []); // default as notes data comes
   const [tagInput, setTagInput] = useState<string>("");
   const navigate = useNavigate();
+  const [isAsyncCall, setIsAsynciCall] = useState(false);
 
   const handleTagChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -60,6 +61,7 @@ export default function UpdateNoteModal({
     const content = formData.get("content");
 
     try {
+      setIsAsynciCall(true);
       const response = await axiosInstance.put(`/edit-note/${note._id}`, {
         title,
         content,
@@ -78,6 +80,8 @@ export default function UpdateNoteModal({
       } else {
         toast.error("error while updating notes");
       }
+    } finally {
+      setIsAsynciCall(false);
     }
   };
 
@@ -151,8 +155,13 @@ export default function UpdateNoteModal({
               <Button color="danger" variant="light" onPress={onClose}>
                 Cancel
               </Button>
-              <Button color="primary" form="create-notes-form" type="submit">
-                Confirm
+              <Button
+                color="primary"
+                disabled={isAsyncCall}
+                form="create-notes-form"
+                type="submit"
+              >
+                {isAsyncCall ? "Updating.." : "Update"}
               </Button>
             </ModalFooter>
           </>

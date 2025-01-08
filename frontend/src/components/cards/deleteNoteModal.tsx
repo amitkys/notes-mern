@@ -8,6 +8,7 @@ import {
 import { Button } from "@nextui-org/button";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 import axiosInstance from "@/utils/axiosInstance";
 
@@ -17,6 +18,7 @@ interface CreateNoteModalProps {
   getAllNotes: () => void; // Add this prop
   onClose: (open: boolean) => void;
 }
+
 export default function DeleteNoteModal({
   isOpen,
   onClose,
@@ -25,11 +27,15 @@ export default function DeleteNoteModal({
 }: CreateNoteModalProps) {
   const navigate = useNavigate();
 
+  // Track loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleDelete = async () => {
+    setIsLoading(true); // Set loading state to true
     try {
       const response = await axiosInstance.delete(`/delete-note/${noteId}`);
 
-      if (response.status == 200 && response.data.error == false) {
+      if (response.status === 200 && response.data.error === false) {
         getAllNotes();
         onClose(false);
         navigate("/");
@@ -41,6 +47,8 @@ export default function DeleteNoteModal({
       } else {
         toast.error("Something went wrong");
       }
+    } finally {
+      setIsLoading(false); // Reset loading state after the request completes
     }
   };
 
@@ -64,8 +72,13 @@ export default function DeleteNoteModal({
               <Button color="danger" variant="light" onPress={onClose}>
                 Cancel
               </Button>
-              <Button color="primary" onClick={handleDelete}>
-                Confirm
+              <Button
+                color="primary"
+                disabled={isLoading} // Disable the button while loading
+                onClick={handleDelete}
+              >
+                {isLoading ? "Deleting..." : "Confirm"}{" "}
+                {/* Change button text */}
               </Button>
             </ModalFooter>
           </>

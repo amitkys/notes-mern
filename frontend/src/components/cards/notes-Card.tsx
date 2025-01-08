@@ -24,8 +24,10 @@ export default function NotesCard({
   const updateNoteDisclosure = useDisclosure();
   const deleteNodeDisclosure = useDisclosure();
   const [isPinned] = useState(note.isPinned);
+  const [isLoading, setisLoading] = useState(false);
   const handlePin = async () => {
     try {
+      setisLoading(true);
       const pinStatus = !isPinned;
 
       const response = await axiosInstance.put(
@@ -50,6 +52,8 @@ export default function NotesCard({
       } else {
         toast.error("server issue while pinning notes");
       }
+    } finally {
+      setisLoading(false);
     }
   };
 
@@ -58,7 +62,7 @@ export default function NotesCard({
       <Card className="shadow-lg border border-gray-600">
         <CardHeader className="flex flex-row justify-between">
           <h1>{note.title}</h1>
-          <button onClick={handlePin}>
+          <button disabled={isLoading} onClick={handlePin}>
             {isPinned ? (
               <RiPushpinFill className="text-green-500 text-lg" />
             ) : (
