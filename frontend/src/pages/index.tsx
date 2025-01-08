@@ -19,7 +19,7 @@ export default function IndexPage() {
   const getAllNotes = async () => {
     try {
       setLoading(true); // Start loading
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Artificial delay
+      // await new Promise((resolve) => setTimeout(resolve, 1000)); // Artificial delay
       const response = await axiosInstance.get("/all-notes");
 
       setNotes(response.data.notes);

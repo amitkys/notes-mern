@@ -10,9 +10,10 @@ import { Form } from "@nextui-org/form";
 import { Button } from "@nextui-org/button";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import { Note } from "@/types";
 import axiosInstance from "@/utils/axiosInstance";
-import toast from "react-hot-toast";
 
 interface CreateNoteModalProps {
   isOpen: boolean;
