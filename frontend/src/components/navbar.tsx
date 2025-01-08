@@ -6,8 +6,6 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/navbar";
-import { Link } from "@nextui-org/link";
-import { Button } from "@nextui-org/button";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
