@@ -27,7 +27,7 @@ mongoose.connect(process.env.DB_CONNECTION_URI)
 .then(() => {console.log('connected to db')}).catch((e) => console.log('error to connect db', e));
 
 const url = `https://notes-mern-backend-ti1q.onrender.com`; // Replace with your Render URL
-const interval = 30000; // Interval in milliseconds (30 seconds)
+const interval = 600000; // Interval in milliseconds (30 seconds)
 
 //Reloader Function
 function reloadWebsite() {
