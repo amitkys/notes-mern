@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const User = require('./models/user');
 const Note = require('./models/note'); 
 const authenticateToken = require('./utilities');
+const axios = require("axios");
 
 const app = express();
 
