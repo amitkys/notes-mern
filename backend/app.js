@@ -26,21 +26,21 @@ app.use((err, req, res, next) => {
 mongoose.connect(process.env.DB_CONNECTION_URI)
 .then(() => {console.log('connected to db')}).catch((e) => console.log('error to connect db', e));
 
-const url = `https://notes-mern-backend-ti1q.onrender.com`; // Replace with your Render URL
-const interval = 600000; // Interval in milliseconds (30 seconds)
+// const url = `https://notes-mern-backend-ti1q.onrender.com`; // Replace with your Render URL
+// const interval = 600000; // Interval in milliseconds (30 seconds)
 
 //Reloader Function
-function reloadWebsite() {
-  axios.get(url)
-    .then(response => {
-      console.log(`Reloaded at ${new Date().toISOString()}: Status Code ${response.status}`);
-    })
-    .catch(error => {
-      console.error(`Error reloading at ${new Date().toISOString()}:`, error.message);
-    });
-}
+// function reloadWebsite() {
+//   axios.get(url)
+//     .then(response => {
+//       console.log(`Reloaded at ${new Date().toISOString()}: Status Code ${response.status}`);
+//     })
+//     .catch(error => {
+//       console.error(`Error reloading at ${new Date().toISOString()}:`, error.message);
+//     });
+// }
 
-setInterval(reloadWebsite, interval);
+// setInterval(reloadWebsite, interval);
 
 app.get('/', (req, res) => {
     res.json({message: 'hello from backend'});
